@@ -1,0 +1,14 @@
+dn: uid=jlopez,ou=segundo,dc=sor,dc=local
+uid: jlopez
+cn: Usuario jlopez
+objectclass: inetOrgPerson
+objectclass: posixAccount
+objectclass: shadowAccount
+userPassword: {SSHA}i1UVIGmT0fXKEXnS4qvKLqDPzvUL+56f
+loginShell: /bin/bash
+uidNumber: 10000
+gidNumber: 10000
+homeDirectory: /home/jlopez
+gecos: jlopez
+sn: Lopez
+

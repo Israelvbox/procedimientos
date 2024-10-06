@@ -1,0 +1,50 @@
+Guía Rápida de Comandos Screen
+
+Iniciar y Salir de Screen
+
+    Iniciar una nueva sesión:
+        screen
+
+    Iniciar una sesión con nombre:
+        screen -S nombre_sesion
+
+    Salir de una sesión (desconectar):
+        Ctrl + A, luego D
+
+Gestionar Sesiones
+
+    Listar sesiones activas:
+        screen -ls
+
+    Reconectar a una sesión:
+        screen -r [ID_sesion o nombre_sesion]
+
+    Forzar reconexión a una sesión:
+        screen -d -r [ID_sesion o nombre_sesion]
+
+Dentro de una Sesión Screen
+
+    Crear una nueva ventana:
+        Ctrl + A, luego C
+
+    Cambiar entre ventanas:
+        Ctrl + A, luego N (siguiente)
+        Ctrl + A, luego P (anterior)
+
+    Listar ventanas:
+        Ctrl + A, luego "
+
+    Ir a una ventana específica:
+        Ctrl + A, luego [número de ventana]
+
+    Dividir la pantalla horizontalmente:
+        Ctrl + A, luego S
+
+    Dividir la pantalla verticalmente:
+        Ctrl + A, luego |
+
+    Cambiar entre divisiones de pantalla:
+        Ctrl + A, luego Tab
+
+    Cerrar una división de pantalla:
+        Ctrl + A, luego X

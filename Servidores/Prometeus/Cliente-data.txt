@@ -1,0 +1,95 @@
+#!/bin/bash
+
+# Actualizar el sistema
+apt update && apt upgrade -y
+
+# Instalar dependencias
+apt install -y wget curl software-properties-common adduser libfontconfig1
+
+# Instalar y configurar Node Exporter
+wget https://github.com/prometheus/node_exporter/releases/download/v1.3.1/node_exporter-1.3.1.linux-amd64.tar.gz
+tar xvfz node_exporter-1.3.1.linux-amd64.tar.gz
+cp node_exporter-1.3.1.linux-amd64/node_exporter /usr/local/bin
+useradd -rs /bin/false node_exporter
+
+cat <<EOF > /etc/systemd/system/node_exporter.service
+[Unit]
+Description=Node Exporter
+After=network.target
+
+[Service]
+User=node_exporter
+ExecStart=/usr/local/bin/node_exporter
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+systemctl daemon-reload
+systemctl start node_exporter
+systemctl enable node_exporter
+
+# Instalar y configurar Prometheus
+useradd -rs /bin/false prometheus
+mkdir /etc/prometheus
+mkdir /var/lib/prometheus
+
+wget https://github.com/prometheus/prometheus/releases/download/v2.37.0/prometheus-2.37.0.linux-amd64.tar.gz
+tar xvf prometheus-2.37.0.linux-amd64.tar.gz
+cp prometheus-2.37.0.linux-amd64/prometheus /usr/local/bin/
+cp prometheus-2.37.0.linux-amd64/promtool /usr/local/bin/
+cp -r prometheus-2.37.0.linux-amd64/consoles /etc/prometheus
+cp -r prometheus-2.37.0.linux-amd64/console_libraries /etc/prometheus
+
+cat <<EOF > /etc/prometheus/prometheus.yml
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'node_exporter'
+    static_configs:
+      - targets: ['localhost:9100']
+EOF
+
+cat <<EOF > /etc/systemd/system/prometheus.service
+[Unit]
+Description=Prometheus
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=prometheus
+ExecStart=/usr/local/bin/prometheus \
+    --config.file /etc/prometheus/prometheus.yml \
+    --storage.tsdb.path /var/lib/prometheus/ \
+    --web.console.templates=/etc/prometheus/consoles \
+    --web.console.libraries=/etc/prometheus/console_libraries
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+chown prometheus:prometheus /etc/prometheus
+chown prometheus:prometheus /var/lib/prometheus
+chown prometheus:prometheus /usr/local/bin/prometheus
+chown prometheus:prometheus /usr/local/bin/promtool
+
+systemctl daemon-reload
+systemctl start prometheus
+systemctl enable prometheus
+
+# Instalar y configurar Grafana
+apt-get install -y apt-transport-https
+add-apt-repository "deb https://packages.grafana.com/oss/deb stable main"
+wget -q -O - https://packages.grafana.com/gpg.key | apt-key add -
+apt-get update
+apt-get install grafana -y
+
+systemctl daemon-reload
+systemctl start grafana-server
+systemctl enable grafana-server
+
+echo "Instalación completada. Accede a Grafana en http://localhost:3000"
+echo "Usuario por defecto: admin"
+echo "Contraseña por defecto: admin"
+echo "Recuerda cambiar la contraseña después del primer inicio de sesión"

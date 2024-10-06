@@ -1,0 +1,26 @@
+IP Virtual
+
+1.Primero, identifica el nombre de la interfaz de red que deseas utilizar. Puedes hacerlo con el comando:
+
+	ip addr show
+
+Esto te mostrará una lista de las interfaces de red disponibles, como eth0, ens33, enp0s3, etc.
+
+
+2.Configurar la IP virtual temporalmente (sesión actual):
+
+Puedes agregar una IP virtual temporalmente (hasta el próximo reinicio) usando el siguiente comando:
+
+	sudo ip addr add 192.168.1.100/24 dev eth0 label eth0:0
+
+Aquí:
+
+192.168.1.100/24 es la IP virtual que estás asignando.
+
+eth0 es el nombre de la interfaz de red física.
+
+eth0:0 es el alias que estás creando para la IP virtual.
+
+Puedes verificar que la IP virtual se haya agregado con:
+
+ip addr show eth0

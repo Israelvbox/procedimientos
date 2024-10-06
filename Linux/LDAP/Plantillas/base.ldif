@@ -1,0 +1,4 @@
+dn: ou=unidad,dc=sor,dc=local
+objectClass: top
+objectClass: organizationalUnit
+ou: unidad

@@ -1,0 +1,7 @@
+sudo ldapadd -x -D cn=admin,dc=sor,dc=local -W -f base.ldif
+
+sudo ldapadd -x -D cn=admin,dc=sor,dc=local -W -f grupos.ldif
+
+sudo ldapadd -x -D cn=admin,dc=sor,dc=local -W -f usuarios.ldif
+
+sudo ldapadd -x -D cn=admin,dc=sor,dc=local -W -f modify.ldif

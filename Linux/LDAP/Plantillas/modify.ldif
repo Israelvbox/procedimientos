@@ -1,0 +1,10 @@
+dn: uid=eva,ou=usuarios,dc=sor,dc=es
+changetype: modify
+replace: userpassword
+userpassword: nueva_clave
+
+
+dn: uid=lgomez,ou=usuarios,dc=sor,dc=es
+changetype: modify
+replace: mail
+mail: luis.gomez@sor.local

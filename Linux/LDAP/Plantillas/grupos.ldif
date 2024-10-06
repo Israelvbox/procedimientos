@@ -1,0 +1,5 @@
+dn: cn=SMR2,ou=segundo,dc=sor,dc=local
+objectclass: posixGroup
+cn: 2º de SMR
+gidNumber: 10000
+memberUid: jlopez

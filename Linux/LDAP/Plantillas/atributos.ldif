@@ -1,0 +1,8 @@
+dn: uid=eva,ou=usuarios,dc=sor,dc=es
+add: mail
+mail: eva@sor.es
+
+
+dn: uid=lgomez,ou=usuarios,dc=sor,dc=es
+delete: mail
+
