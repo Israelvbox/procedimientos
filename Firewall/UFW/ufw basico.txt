@@ -1,9 +1,0 @@
-#!/bin/bash
-
-#Deniega conexiones salientes que no coincidan con ninguna regla.
-
-ufw default deny outgoing
-
-#Permite conexiones salientes que no coincidan con ninguna regla.
-
-ufw default allow outgoing
